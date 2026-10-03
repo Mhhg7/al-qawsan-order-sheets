@@ -1,0 +1,320 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Al-Qawsan Order Sheets</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@600&family=Inter:wght@400;500;600;700&family=Montserrat:wght@600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--main:#FF8C00;--alt:#0F3760;--accent:#FDB913;--icon:#FF8C00;--page:#EEF1F5;--ink:#0F1E33;--mut:#5B6474;--line:#D9DEE7;--card:#fff}
+html.swap{--main:#0F3760;--alt:#FF8C00;--icon:#FFFFFF}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:76px}
+body{margin:0;background:var(--page);color:var(--ink);font-family:Inter,system-ui,sans-serif}
+/* ---------- site chrome ---------- */
+.top{position:sticky;top:0;z-index:20;background:#fff;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:16px;padding:10px 20px;box-shadow:0 2px 12px rgba(15,30,51,.06)}
+.brand{display:flex;align-items:center;gap:10px;flex:none}
+.brand img{height:34px;display:block}
+.brand b{font:800 15px/1.1 Montserrat,sans-serif;color:#0F3760;letter-spacing:.3px}
+.brand small{display:block;font:500 10px Inter,sans-serif;color:var(--mut);letter-spacing:.8px;text-transform:uppercase;margin-top:2px}
+.tabs{display:flex;gap:6px;overflow-x:auto;flex:1;min-width:0;scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tabs a{flex:none;text-decoration:none;color:#0F3760;font-weight:600;font-size:13px;padding:8px 14px;border-radius:999px;border:1px solid transparent;display:flex;gap:7px;align-items:center}
+.tabs a:hover{background:#EEF1F5}
+.tabs a.on{background:#0F3760;color:#fff}
+.tabs a i{font-style:normal;font-size:11px;opacity:.7;font-variant-numeric:tabular-nums}
+.swapbtn{flex:none;display:flex;align-items:center;gap:9px;font:600 13px Inter,sans-serif;color:#0F3760;background:#fff;border:1.5px solid #0F3760;border-radius:999px;padding:6px 14px 6px 8px;cursor:pointer}
+.swapbtn:hover{background:#EEF1F5}
+.swapbtn .sw{width:34px;height:20px;border-radius:999px;background:linear-gradient(90deg,#FF8C00 50%,#0F3760 50%);position:relative;border:1.5px solid #0F3760;transition:transform .35s}
+html.swap .swapbtn .sw{transform:rotate(180deg)}
+.swapbtn:focus-visible,.tabs a:focus-visible,button:focus-visible{outline:3px solid #FDB913;outline-offset:2px}
+main{padding:28px 20px 80px 20px}
+.group{max-width:794px;margin:0 auto 48px}
+.ghead{display:flex;align-items:end;justify-content:space-between;gap:12px;margin:0 auto 14px;max-width:794px}
+.ghead h2{margin:0;font:800 26px/1.1 Montserrat,sans-serif;color:#0F3760}
+.ghead p{margin:4px 0 0;color:var(--mut);font-size:13px}
+.ghead .n{font:600 12px Inter,sans-serif;letter-spacing:1px;text-transform:uppercase;color:var(--mut);white-space:nowrap}
+.cap{max-width:794px;margin:18px auto 8px;font:600 11px Inter,sans-serif;letter-spacing:1px;text-transform:uppercase;color:var(--mut)}
+.fit{margin:0 auto 6px;width:calc(794px*var(--s,1));height:calc(1123px*var(--s,1))}
+.fit>.sheet{transform:scale(var(--s,1));transform-origin:0 0}
+/* ---------- the sheet ---------- */
+.sheet{width:794px;height:1123px;position:relative;overflow:hidden;background:#fff;box-shadow:0 14px 36px rgba(15,30,51,.16);display:flex;flex-direction:column;border-radius:2px}
+.head{position:relative;height:118px;flex:none;background:var(--alt);display:grid;grid-template-columns:200px minmax(0,1fr) 200px;align-items:center;padding:0 32px;overflow:hidden;transition:background .3s}
+.head.hex::before{content:"";position:absolute;inset:0;opacity:.14;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='97' viewBox='0 0 56 97'%3E%3Cpath d='M28 2 54 17v30L28 62 2 47V17zM28 64l26 15v18M28 64 2 79v18' fill='none' stroke='%23fff' stroke-width='1.4'/%3E%3C/svg%3E")}
+.head>*{position:relative}
+.lg{background:#fff;border-radius:8px;padding:7px 12px;height:66px;display:flex;align-items:center;justify-self:start}
+.lg img{height:100%;display:block}
+.head h1{margin:0;font:800 22px/30px Montserrat,system-ui,sans-serif;letter-spacing:.6px;color:#fff;text-align:center;white-space:nowrap}
+.head.one h1{font-size:28px}
+.partner{justify-self:end;height:84px;display:flex;align-items:center}
+.partner img{height:100%;display:block}
+.partner.box{background:#fff;border-radius:8px;padding:6px 10px;height:66px}
+.bar{height:4px;flex:none;background:linear-gradient(135deg,#FDB913 0%,#F7931E 55%,#E8671C 100%)}
+.grid{flex:1;min-height:0;padding:14px 18px 14px;display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:14px 20px;align-content:start}
+.card{background:var(--main);border-radius:14px;padding:13px;display:flex;flex-direction:column;min-height:0;box-shadow:0 4px 12px rgba(15,30,51,.18);transition:background .3s}
+.photo{height:220px;flex:none;position:relative;overflow:hidden;background:#fff;border-radius:8px;cursor:pointer}
+.photo .pimg{position:absolute;inset:0;width:100%;height:100%;object-fit:fill;transform-origin:center;user-select:none;-webkit-user-drag:none;pointer-events:none}
+.photo.rep .pimg{object-fit:contain}
+.photo::after{content:"Edit photo";position:absolute;right:8px;bottom:8px;background:#0F3760;color:#fff;font:600 11px Inter,sans-serif;padding:5px 9px;border-radius:999px;opacity:0;transition:opacity .15s;pointer-events:none}
+.photo:hover::after{opacity:.92}
+.photo.sel{outline:3px solid #FDB913;outline-offset:2px}
+.photo.drop{box-shadow:inset 0 0 0 4px #FDB913}
+.rows{flex:1;display:flex;flex-direction:column;justify-content:space-evenly;padding:4px 4px 0;min-height:0}
+.row{display:flex;justify-content:space-between;align-items:center;gap:14px;padding:0 0 9px;border-bottom:1.5px solid rgba(255,255,255,.55);color:#fff;min-height:36px}
+.row:last-child{border-bottom:0}
+.row:not(:first-child){padding-top:9px}
+.row .k{font:700 11px Montserrat,sans-serif;letter-spacing:1px;text-transform:uppercase;flex:none}
+.row .v{font:500 13.5px/1.25 Inter,sans-serif;text-align:end}
+.row.b .k{font-size:12px;letter-spacing:1.1px}
+.row.b .v{font:600 19px/1.15 Inter,sans-serif}
+.foot{margin-top:auto;flex:none;height:86px;background:var(--alt);display:flex;align-items:center;justify-content:space-between;gap:24px;padding:0 32px;color:#fff;font-size:13px;font-weight:500;transition:background .3s}
+.foot .c{display:grid;gap:7px}.foot .c span{display:flex;align-items:center;gap:9px}
+.foot svg{width:15px;height:15px;flex:none;stroke:var(--icon);fill:none;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+.foot .tel{font-size:15px;font-weight:600;display:flex;align-items:center;gap:9px}
+.qr{width:56px;height:56px;border:1px dashed rgba(255,255,255,.6);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:600;letter-spacing:1px;color:rgba(255,255,255,.8)}
+/* ---------- photo panel ---------- */
+#panel{position:fixed;top:0;right:0;width:280px;height:100vh;overflow:auto;background:#fff;border-left:1px solid var(--line);padding:84px 16px 16px;font-size:13px;box-shadow:-6px 0 20px rgba(15,30,51,.08);z-index:10}
+#panel h2{margin:0 0 4px;font:800 15px Montserrat,sans-serif;color:#0F3760}
+#panel .hint{color:var(--mut);font-size:12px;margin:0 0 12px;line-height:1.45}
+#panel label{margin:12px 0 4px;font-weight:600;font-size:12px;display:flex;justify-content:space-between}
+#panel input[type=range]{width:100%;accent-color:#FF8C00}
+button{font:inherit;font-weight:600;border:1px solid #0F3760;background:#fff;color:#0F3760;border-radius:8px;padding:8px 10px;cursor:pointer}
+button:hover{background:#EEF1F5}
+button.dng{border-color:#C0392B;color:#C0392B}
+.btns{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:14px}
+.btns .w{grid-column:1/-1}
+.seg{display:grid;grid-template-columns:1fr 1fr;margin-top:12px}
+.seg button{border-radius:0}.seg button:first-child{border-radius:8px 0 0 8px}.seg button:last-child{border-radius:0 8px 8px 0}
+.seg button.on{background:#0F3760;color:#fff}
+#status{margin-top:12px;font-size:12px;color:var(--mut);min-height:18px}
+#ctl[hidden],#empty[hidden]{display:none}
+@media (min-width:1100px){main{margin-right:280px}}
+@media (max-width:1099px){
+  #panel{top:auto;bottom:0;width:100%;height:auto;max-height:55vh;padding:14px 16px;border-left:0;border-top:1px solid var(--line)}
+  #panel.idle{display:none}
+  main{padding-bottom:60vh}
+}
+@media (max-width:640px){.brand b,.brand small{display:none}.top{padding:8px 12px;gap:8px}.swapbtn span{display:none}.swapbtn{padding:6px 8px}main{padding-inline:10px}.ghead h2{font-size:21px}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="brand"><img src="img/logo-aq.png" alt="Al-Qawsan"><div><b>AL-QAWSAN GROUP</b><small>Medical order sheets</small></div></div>
+  <nav class="tabs" id="tabs" aria-label="Order sheet sets"></nav>
+  <button class="swapbtn" id="swap" aria-pressed="false" title="Swap the main colour"><i class="sw"></i><span>Swap colours</span></button>
+</header>
+<main id="main"></main>
+
+<aside id="panel" class="idle">
+  <div id="empty">
+    <h2>Photo editor</h2>
+    <p class="hint">Click any product photo to change its size and position, or to add your own photo. The background is removed automatically.</p>
+  </div>
+  <div id="ctl" hidden>
+    <h2>Photo controls</h2>
+    <p class="hint">Drag the photo to move it. Mouse wheel resizes it.</p>
+    <div class="seg" id="seg"><button id="mCut">No background</button><button id="mOrig">Original</button></div>
+    <label>Size <span id="vS"></span></label><input type="range" id="rS" min="10" max="300">
+    <label>Left / Right <span id="vX"></span></label><input type="range" id="rX" min="-100" max="100">
+    <label>Up / Down <span id="vY"></span></label><input type="range" id="rY" min="-100" max="100">
+    <label>Rotate <span id="vR"></span></label><input type="range" id="rR" min="-180" max="180">
+    <div id="tolWrap" hidden><label>Background sensitivity <span id="vT"></span></label><input type="range" id="rT" min="5" max="120"></div>
+    <div class="btns">
+      <button id="bAdd" class="w">Add / replace photo</button>
+      <button id="bRedo">Redo cut-out</button>
+      <button id="bReset">Reset</button>
+      <button id="bDone" class="w">Done</button>
+    </div>
+  </div>
+  <div id="status" role="status"></div>
+</aside>
+<input type="file" id="file" accept="image/*" hidden>
+
+<script>
+const DATA = [{"id": "general", "name": "General", "full": "Al-Qawsan Group", "logo": null, "sheets": [[{"id": "gen1_1", "b": "Tardipen", "a": "Benzathine Benzylpenicillin", "d": "1.2 M.I.U.", "f": "Vial (I.M.)"}, {"id": "gen1_2", "b": "Zolol Ophtadose", "a": "Dorzolamide, Timolol", "d": "0.2 ml", "f": "Eye Drops (Single Dose)"}, {"id": "gen1_3", "b": "Tardipen", "a": "Benzathine Benzylpenicillin", "d": "0.6 M.I.U.", "f": "Vial (I.M.)"}, {"id": "gen1_4", "b": "Nefomed", "a": "Nefopam", "d": "20 mg / 2 ml", "f": "Ampoule (I.V. / I.M.)"}], [{"id": "gen2_1", "b": "Cefaxone IV", "a": "Ceftriaxone", "d": "1 g", "f": "Vial (I.V.)"}, {"id": "gen2_2", "b": "Cefaxone IM", "a": "Ceftriaxone", "d": "1 g", "f": "Vial (I.M.)"}, {"id": "gen2_3", "b": "Melatona", "a": "Melatonin", "d": "3 mg", "f": "Syrup"}, {"id": "gen2_4", "b": "Zolol Ophtadose", "a": "Dorzolamide, Timolol", "d": "0.2 ml", "f": "Eye Drops (Single Dose)"}], [{"id": "gen3_1", "b": "Cefaxone IV", "a": "Ceftriaxone", "d": "1 g", "f": "Vial (I.V.)"}, {"id": "gen3_2", "b": "Leveraa", "a": "Levetiracetam", "d": "500 mg", "f": "Tablet"}, {"id": "gen3_3", "b": "Omezole", "a": "Omeprazole", "d": "20 mg", "f": "Tablet"}, {"id": "gen3_4", "b": "MultiMax", "a": "Vit A, C, E, K2, D3, Zinc, B6, Biotin, Lutein, Chromium, Iodine…", "d": "—", "f": "Tablet"}], [{"id": "gen4_1", "b": "Etoramax", "a": "Etoricoxib", "d": "90 mg", "f": "Tablet"}, {"id": "gen4_2", "b": "Fosfomycin-SDI Adults", "a": "Fosfomycin Trometamol", "d": "3 g", "f": "Sachet"}, {"id": "gen4_3", "b": "Glimee M", "a": "Glimepiride / Metformin HCl", "d": "2 mg / 500 mg", "f": "Tablet"}, {"id": "gen4_4", "b": "Linagliptin – SDI", "a": "Linagliptin", "d": "5 mg", "f": "Tablet"}], [{"id": "gen5_1", "b": "Zinkykids Boost Up", "a": "Zinc", "d": "20 mg", "f": "Tablet"}, {"id": "gen5_2", "b": "Clindacin", "a": "Clindamycin As Phosphate", "d": "1%", "f": "Gel"}, {"id": "gen5_3", "b": "Dapaxosin", "a": "Dapagliflozin Propanediol", "d": "5 mg", "f": "Tablet"}, {"id": "gen5_4", "b": "Dapaxosin", "a": "Dapagliflozin Propanediol", "d": "10 mg", "f": "Tablet"}], [{"id": "gen6_1", "b": "Empass", "a": "Empagliflozin", "d": "25 mg", "f": "Tablet"}, {"id": "gen6_2", "b": "Alphacol", "a": "Brimonidine Tartrate", "d": "0.2%", "f": "Eye Drops"}, {"id": "gen6_3", "b": "Biotin Hair Booster", "a": "D-Biotin, Vit E, C", "d": "—", "f": "Gummy"}, {"id": "gen6_4", "b": "Melatonin Adults", "a": "Melatonin", "d": "6 mg", "f": "Gummy"}]]}, {"id": "unimed", "name": "Unimed", "full": "Unimed Laboratories", "logo": "logo-unimed.png", "sheets": [[{"id": "uni1_1", "b": "Tardipen", "a": "Benzathine Benzylpenicillin", "d": "1.2 M.I.U.", "f": "Vial (I.M.)"}, {"id": "uni1_2", "b": "Tardipen", "a": "Benzathine Benzylpenicillin", "d": "0.6 M.I.U.", "f": "Vial (I.M.)"}, {"id": "uni1_3", "b": "Nefomed", "a": "Nefopam", "d": "20 mg / 2 ml", "f": "Ampoule (I.V. / I.M.)"}, {"id": "uni1_4", "b": "Alphacol", "a": "Brimonidine Tartrate", "d": "0.2%", "f": "Eye Drops"}], [{"id": "uni2_1", "b": "Cefaxone IV", "a": "Ceftriaxone", "d": "1 g", "f": "Vial (I.V.)"}, {"id": "uni2_2", "b": "Cefaxone IM", "a": "Ceftriaxone", "d": "1 g", "f": "Vial (I.M.)"}, {"id": "uni2_3", "b": "Zolol Ophtadose", "a": "Dorzolamide, Timolol", "d": "0.2 ml", "f": "Eye Drops (Single Dose)"}, {"id": "uni2_4", "b": "Latanocol", "a": "Latanoprost", "d": "0.005% 0.3ml", "f": "Eye Drops (Single Dose)"}], [{"id": "uni3_1", "b": "Amoxil", "a": "Amoxicillin", "d": "0.5g IM/IV vial", "f": "Vial (I.M.)"}, {"id": "uni3_2", "b": "Thiomed", "a": "Thiocolchicoside", "d": "4mg/2ml", "f": "AMP"}]]}, {"id": "sdi", "name": "SDI", "full": "State Company for Drug Industries", "logo": "logo-sdi.png", "sheets": [[{"id": "sdi1_1", "b": "Leveraa", "a": "Levetiracetam", "d": "500 mg", "f": "Tablet – 60"}, {"id": "sdi1_2", "b": "Dapaxosin", "a": "Dapagliflozin Propanediol", "d": "5 mg", "f": "Tablet – 30"}, {"id": "sdi1_3", "b": "Linagliptin – SDI", "a": "Linagliptin", "d": "5 mg", "f": "Tablet – 30"}, {"id": "sdi1_4", "b": "Dapaxosin", "a": "Dapagliflozin Propanediol", "d": "10 mg", "f": "Tablet – 30"}], [{"id": "sdi2_1", "b": "Empass", "a": "Empagliflozin", "d": "25 mg", "f": "Tablet – 30"}, {"id": "sdi2_2", "b": "Glimee M", "a": "Glimepiride / Metformin HCl", "d": "2 mg / 500 mg", "f": "Tablet – 30"}, {"id": "sdi2_3", "b": "Fosfomycin-SDI", "a": "Fosfomycin Trometamol", "d": "3 g", "f": "Sachet – 2"}, {"id": "sdi2_4", "b": "Omezole", "a": "Omeprazole", "d": "20 mg", "f": "Tablet – 20"}], [{"id": "sdi3_1", "b": "Clindacin", "a": "Clindamycin As Phosphate", "d": "1%", "f": "Gel – 30 g"}, {"id": "sdi3_2", "b": "Etoramax", "a": "Etoricoxib", "d": "90 mg", "f": "Tablet – 20"}, {"id": "sdi3_3", "b": "Ibumax", "a": "Paracetamol, Ibuprofen, Caffeine", "d": "250 / 200 / 50 mg", "f": "Tablet – 20"}]]}, {"id": "kas", "name": "Kas Swiss", "full": "CAS Switzerland", "logo": "logo-kas.png", "sheets": [[{"id": "kas1_1", "b": "Biotin Hair Booster", "a": "D-Biotin, Vit E, Vit C", "d": "", "f": "Gummy – 60"}, {"id": "kas1_2", "b": "MultiMax", "a": "Vit A, C, E, K2, D3, Zinc, B6, Biotin, Lutein, Chromium, Iodine", "d": "", "f": "Tablet – 45"}, {"id": "kas1_3", "b": "Melatonin Adults", "a": "Melatonin", "d": "6 mg", "f": "Gummy - 60"}, {"id": "kas1_4", "b": "Melatona", "a": "Melatonin", "d": "3 mg", "f": "Syrup – 100 ml"}], [{"id": "kas2_1", "b": "Zinkykids Boost Up", "a": "Zinc", "d": "20 mg", "f": "Rapid Disintegration Tablet – 28"}, {"id": "kas2_2", "b": "Immune Kids Gummy", "a": "VitA,C,E,K2,D3, Zinc, VitB6, Echinacea and Elderberry", "d": "", "f": "Gummy - 60"}, {"id": "kas2_3", "b": "Carolyte Boost Up Solution", "a": "Electrolyte solution", "d": "", "f": "Solution-200ml"}]]}];
+const $ = id => document.getElementById(id);
+const clamp = (v,a,b)=>Math.min(b,Math.max(a,v));
+const ICON = {
+  web:'<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>',
+  pin:'<svg viewBox="0 0 24 24"><path d="M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/></svg>',
+  tel:'<svg viewBox="0 0 24 24"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/></svg>'
+};
+const edits = {};   // card id -> {src,cut,orig,mode,method,s,x,y,r,tol}
+let sel = null;
+
+/* ---------- build ---------- */
+function sheetEl(g, cards){
+  const s = document.createElement('section'); s.className='sheet';
+  const gen = g.id==='general';
+  const partner = g.logo ? `<div class="partner ${g.id==='sdi'||g.id==='kas'?'':'box'}"><img src="img/${g.logo}" alt="${g.full}"></div>` : '<div></div>';
+  s.innerHTML = `<div class="head ${gen?'':'hex one'}"><div class="lg"><img src="img/logo-aq.png" alt="Al-Qawsan Scientific Bureau"></div>
+    <h1>${gen?'AL-QAWSAN GROUP<br>MEDICAL ORDER SHEET':'AL-QAWSAN GROUP'}</h1>${partner}</div><div class="bar"></div>`;
+  const grid = document.createElement('div'); grid.className='grid';
+  cards.forEach(c=>grid.appendChild(cardEl(c)));
+  s.appendChild(grid);
+  s.insertAdjacentHTML('beforeend',`<div class="foot"><div class="c"><span>${ICON.web}<span dir="ltr">AL-Qawsangroup.com</span></span><span>${ICON.pin}Iraq, Baghdad, Qadisiyah District</span></div><span class="tel">${ICON.tel}<span dir="ltr">+964 78 555 99999</span></span><div class="qr">QR</div></div>`);
+  return s;
+}
+function cardEl(c){
+  const d = document.createElement('div'); d.className='card';
+  const rows = [['Brand Name',c.b,'b'],['Active Ingredient',c.a,''],['Dose',c.d,''],['Dosage Form',c.f,'']];
+  d.innerHTML = `<div class="photo" data-id="${c.id}" tabindex="0" role="button" aria-label="Edit photo for ${c.b}"><img class="pimg" src="img/${c.id}.jpg" alt="${c.b}" loading="lazy"></div>
+    <div class="rows">${rows.map(r=>`<div class="row ${r[2]}"><span class="k">${r[0]}</span><span class="v">${r[1]||''}</span></div>`).join('')}</div>`;
+  const ph = d.querySelector('.photo'); wire(ph, c.id);
+  return d;
+}
+function build(){
+  const main = $('main'), tabs = $('tabs');
+  DATA.forEach(g=>{
+    const n = g.sheets.reduce((a,s)=>a+s.length,0);
+    const a = document.createElement('a'); a.href='#'+g.id; a.dataset.g=g.id; a.innerHTML=`${g.name}<i>${g.sheets.length}</i>`; tabs.appendChild(a);
+    const sec = document.createElement('div'); sec.className='group'; sec.id=g.id;
+    sec.innerHTML = `<div class="ghead"><div><h2>${g.name}</h2><p>${g.full}</p></div><span class="n">${g.sheets.length} sheets · ${n} products</span></div>`;
+    g.sheets.forEach((cards,i)=>{
+      sec.insertAdjacentHTML('beforeend',`<p class="cap">${g.name} · Sheet ${i+1} of ${g.sheets.length}</p>`);
+      const fit = document.createElement('div'); fit.className='fit'; fit.appendChild(sheetEl(g,cards)); sec.appendChild(fit);
+    });
+    main.appendChild(sec);
+  });
+  const io = new IntersectionObserver(es=>{ es.forEach(e=>{ if(e.isIntersecting) tabs.querySelectorAll('a').forEach(a=>a.classList.toggle('on',a.dataset.g===e.target.id)); }); },{rootMargin:'-30% 0px -60% 0px'});
+  document.querySelectorAll('.group').forEach(g=>io.observe(g));
+  fitAll(); addEventListener('resize',fitAll);
+}
+function fitAll(){
+  const w = $('main').clientWidth - parseFloat(getComputedStyle($('main')).paddingInline||0)*2 - 0;
+  const s = Math.min(1, ($('main').clientWidth - 2*parseFloat(getComputedStyle($('main')).paddingLeft))/794);
+  document.documentElement.style.setProperty('--s', s.toFixed(4));
+}
+
+/* ---------- colour swap ---------- */
+function setSwap(on){
+  document.documentElement.classList.toggle('swap', on);
+  $('swap').setAttribute('aria-pressed', on);
+  try{ localStorage.setItem('aq-swap', on?'1':'0'); }catch(e){}
+}
+$('swap').onclick = ()=>setSwap(!document.documentElement.classList.contains('swap'));
+try{ if(localStorage.getItem('aq-swap')==='1'||location.search==='?swap') setSwap(true); }catch(e){}
+
+/* ---------- photo editor ---------- */
+function paint(id){
+  const ph = document.querySelector(`.photo[data-id="${id}"]`); if(!ph) return;
+  const e = edits[id], img = ph.querySelector('.pimg');
+  if(!e){ img.style.transform=''; ph.classList.remove('rep'); img.src=`img/${id}.jpg`; return; }
+  const src = e.src ? (e.mode==='cut'&&e.cut ? e.cut : e.orig) : `img/${id}.jpg`;
+  if(img.getAttribute('src')!==src) img.src = src;
+  ph.classList.toggle('rep', !!e.src);
+  img.style.transform = `translate(${e.x}%,${e.y}%) rotate(${e.r}deg) scale(${e.s})`;
+}
+function ensure(id){ return edits[id] || (edits[id]={src:false,cut:null,orig:null,mode:'orig',method:null,s:1,x:0,y:0,r:0,tol:40}); }
+function select(id){
+  sel = id;
+  document.querySelectorAll('.photo').forEach(p=>p.classList.toggle('sel',p.dataset.id===id));
+  $('panel').classList.toggle('idle', !id);
+  $('ctl').hidden = !id; $('empty').hidden = !!id;
+  if(id){ ensure(id); sync(); status(''); }
+}
+function sync(){
+  const e = edits[sel]; if(!e) return;
+  $('rS').value=Math.round(e.s*100); $('vS').textContent=Math.round(e.s*100)+'%';
+  $('rX').value=Math.round(e.x); $('vX').textContent=Math.round(e.x);
+  $('rY').value=Math.round(e.y); $('vY').textContent=Math.round(e.y);
+  $('rR').value=Math.round(e.r); $('vR').textContent=Math.round(e.r)+'°';
+  $('rT').value=e.tol; $('vT').textContent=e.tol;
+  $('seg').hidden = !e.src; $('bRedo').hidden = !e.src;
+  $('mCut').classList.toggle('on',e.mode==='cut'); $('mOrig').classList.toggle('on',e.mode==='orig');
+  $('tolWrap').hidden = !(e.src && e.method==='simple' && e.mode==='cut');
+}
+function status(t){ $('status').textContent=t||''; }
+function wire(ph,id){
+  ph.addEventListener('click',()=>select(id));
+  ph.addEventListener('keydown',e=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); select(id);} });
+  ph.addEventListener('dragover',e=>{ e.preventDefault(); ph.classList.add('drop'); });
+  ph.addEventListener('dragleave',()=>ph.classList.remove('drop'));
+  ph.addEventListener('drop',e=>{ e.preventDefault(); ph.classList.remove('drop'); const f=e.dataTransfer.files[0]; if(f){ select(id); addPhoto(id,f); } });
+  ph.addEventListener('pointerdown',e=>{
+    if(sel!==id) return; const ed=edits[id]; if(!ed) return;
+    const r=ph.getBoundingClientRect(), x0=e.clientX, y0=e.clientY, sx=ed.x, sy=ed.y;
+    ph.setPointerCapture(e.pointerId);
+    const mv=ev=>{ ed.x=clamp(sx+(ev.clientX-x0)/r.width*100,-100,100); ed.y=clamp(sy+(ev.clientY-y0)/r.height*100,-100,100); paint(id); sync(); };
+    const up=()=>{ ph.removeEventListener('pointermove',mv); ph.removeEventListener('pointerup',up); };
+    ph.addEventListener('pointermove',mv); ph.addEventListener('pointerup',up);
+  });
+  ph.addEventListener('wheel',e=>{ if(sel!==id) return; e.preventDefault(); const ed=edits[id]; ed.s=clamp(ed.s*(e.deltaY<0?1.05:1/1.05),.1,3); paint(id); sync(); },{passive:false});
+}
+const bind=(el,key,f)=>$(el).addEventListener('input',()=>{ if(!sel) return; edits[sel][key]=f($(el).value); paint(sel); sync(); });
+bind('rS','s',v=>v/100); bind('rX','x',Number); bind('rY','y',Number); bind('rR','r',Number);
+$('rT').addEventListener('change',()=>{ const e=edits[sel]; if(!e) return; e.tol=+$('rT').value; runCut(sel,'simple'); });
+$('mCut').onclick=()=>{ const e=edits[sel]; if(e){ if(e.cut){ e.mode='cut'; paint(sel); sync(); } else runCut(sel); } };
+$('mOrig').onclick=()=>{ const e=edits[sel]; if(e){ e.mode='orig'; paint(sel); sync(); } };
+$('bReset').onclick=()=>{ const e=edits[sel]; if(!e) return; Object.assign(e,{s:1,x:0,y:0,r:0}); paint(sel); sync(); };
+$('bRedo').onclick=()=>{ if(sel) runCut(sel); };
+$('bAdd').onclick=()=>{ $('file').value=''; $('file').click(); };
+$('bDone').onclick=()=>select(null);
+$('file').addEventListener('change',()=>{ const f=$('file').files[0]; if(f&&sel) addPhoto(sel,f); });
+document.addEventListener('pointerdown',e=>{ if(sel && !e.target.closest('.photo,#panel')) select(null); });
+document.addEventListener('keydown',e=>{ if(e.key==='Escape') select(null); });
+
+function loadImg(src){ return new Promise((res,rej)=>{ const i=new Image(); i.onload=()=>res(i); i.onerror=rej; i.src=src; }); }
+async function toDataURL(file,max=1600){
+  const url=URL.createObjectURL(file);
+  try{ const i=await loadImg(url), k=Math.min(1,max/Math.max(i.naturalWidth,i.naturalHeight));
+    const c=document.createElement('canvas'); c.width=Math.round(i.naturalWidth*k); c.height=Math.round(i.naturalHeight*k);
+    c.getContext('2d').drawImage(i,0,0,c.width,c.height); return c.toDataURL('image/png'); }
+  finally{ URL.revokeObjectURL(url); }
+}
+async function addPhoto(id,file){
+  if(!file.type.startsWith('image/')){ status('Please choose an image file.'); return; }
+  status('Loading photo…');
+  try{ const orig=await toDataURL(file); const e=ensure(id); Object.assign(e,{src:true,orig,cut:null,mode:'orig',method:null,s:1,x:0,y:0,r:0});
+    paint(id); sync(); await runCut(id); }
+  catch(err){ status('Could not read this image.'); }
+}
+let aiLib;
+async function runCut(id,force){
+  const e=edits[id]; if(!e||!e.src) return;
+  status(force==='simple'?'Updating cut-out…':'Removing background… (the first time can take about 20 seconds)');
+  let out=null, method=null;
+  if(force!=='simple'){
+    try{
+      aiLib = aiLib || import('https://cdn.jsdelivr.net/npm/@imgly/background-removal@1.5.5/+esm');
+      const {removeBackground}=await aiLib;
+      const blob=await removeBackground(await (await fetch(e.orig)).blob(),{output:{format:'image/png'}});
+      out=await trim(await blobURL(blob)); method='ai';
+    }catch(err){ console.warn('AI background removal failed; using simple mode',err); }
+  }
+  if(!out){ out=await trim(await simpleCut(e.orig,e.tol)); method='simple'; }
+  e.cut=out; e.method=method; e.mode='cut'; paint(id); if(sel===id) sync();
+  status(method==='ai'?'Background removed.':'Background removed (simple mode, best on plain backgrounds). Adjust the sensitivity if needed.');
+}
+const blobURL=b=>new Promise(r=>{ const f=new FileReader(); f.onload=()=>r(f.result); f.readAsDataURL(b); });
+async function simpleCut(src,tol){
+  const i=await loadImg(src), w=i.naturalWidth, h=i.naturalHeight;
+  const c=document.createElement('canvas'); c.width=w; c.height=h; const g=c.getContext('2d'); g.drawImage(i,0,0);
+  const d=g.getImageData(0,0,w,h), p=d.data; let r=0,gr=0,b=0,n=0;
+  const add=(x,y)=>{ const k=(y*w+x)*4; r+=p[k]; gr+=p[k+1]; b+=p[k+2]; n++; };
+  for(let x=0;x<w;x++){ add(x,0); add(x,h-1); } for(let y=0;y<h;y++){ add(0,y); add(w-1,y); }
+  r/=n; gr/=n; b/=n;
+  const T=tol*tol*3, seen=new Uint8Array(w*h), q=new Int32Array(w*h); let qh=0, qt=0;
+  const close=k=>{ const dr=p[k]-r, dg=p[k+1]-gr, db=p[k+2]-b; return dr*dr+dg*dg+db*db<=T; };
+  const push=(x,y)=>{ const i=y*w+x; if(!seen[i]&&close(i*4)){ seen[i]=1; q[qt++]=i; } };
+  for(let x=0;x<w;x++){ push(x,0); push(x,h-1); } for(let y=0;y<h;y++){ push(0,y); push(w-1,y); }
+  while(qh<qt){ const i=q[qh++], x=i%w, y=(i/w)|0; if(x>0)push(x-1,y); if(x<w-1)push(x+1,y); if(y>0)push(x,y-1); if(y<h-1)push(x,y+1); }
+  for(let i=0;i<w*h;i++) if(seen[i]) p[i*4+3]=0;
+  for(let y=1;y<h-1;y++) for(let x=1;x<w-1;x++){ const i=y*w+x; if(!seen[i]&&(seen[i-1]||seen[i+1]||seen[i-w]||seen[i+w])) p[i*4+3]=140; }
+  g.putImageData(d,0,0); return c.toDataURL('image/png');
+}
+async function trim(src){
+  const i=await loadImg(src), w=i.naturalWidth, h=i.naturalHeight;
+  const c=document.createElement('canvas'); c.width=w; c.height=h; const g=c.getContext('2d'); g.drawImage(i,0,0);
+  const p=g.getImageData(0,0,w,h).data; let x0=w,y0=h,x1=-1,y1=-1;
+  for(let y=0;y<h;y++) for(let x=0;x<w;x++) if(p[(y*w+x)*4+3]>10){ if(x<x0)x0=x; if(x>x1)x1=x; if(y<y0)y0=y; if(y>y1)y1=y; }
+  if(x1<0) return src;
+  const o=document.createElement('canvas'); o.width=x1-x0+1; o.height=y1-y0+1;
+  o.getContext('2d').drawImage(c,x0,y0,o.width,o.height,0,0,o.width,o.height); return o.toDataURL('image/png');
+}
+build();
+</script>
+</body>
+</html>
